@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import {
   getError,
   showErrorToast,
@@ -29,7 +28,7 @@ function ResetPassword() {
         return;
       }
       await axios.post(
-        import.meta.env.VITE_API_URI+ "/users/reset-password",
+        import.meta.env.VITE_API_URI + "/users/reset-password",
         {
           password,
           email,
@@ -48,7 +47,7 @@ function ResetPassword() {
   };
 
   useEffect(() => {
-    if (user || !email || email.length) {
+    if (user || !email || email.length === 0) {
       if (user) {
         showInfoToast("You are already logged in");
         navigate("/");
