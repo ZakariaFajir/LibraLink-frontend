@@ -3,38 +3,41 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showInfoToast } from "../../../../utile";
+import Loading from "../../../components/Loading";
 
 const OrderHistoryPage = () => {
   const [orderHistory, setOrderHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const user = useSelector((state) => state.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchOrderHistory = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URI}/order-history/${user.username}`,
+          {
+            headers: { authorization: `Bearer ${user.token}` },
+          }
+        );
+        setOrderHistory(response.data.orderHistory);
+        setError(null);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (!user) {
-      showInfoToast("Try to login first")
+      showInfoToast("Try to login first");
       navigate("/login");
     } else {
-      loadOrderHistory();
+      fetchOrderHistory();
     }
-  }, [user]);
-
-  const loadOrderHistory = async () => {
-    try {
-      // Faire une requête pour obtenir l'historique des commandes de l'utilisateur
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URI}/order-history/${user.username}`,
-        {
-          headers: { authorization: `Bearer ${user.token}` },
-        }
-      );
-      setOrderHistory(response.data.orderHistory);
-    } catch (error) {
-      console.error(
-        "Erreur lors du chargement de l'historique des commandes :",
-        error
-      );
-    }
-  };
+  }, [user, navigate]);
 
   return (
     <div className="container mx-auto mt-8">
@@ -42,9 +45,13 @@ const OrderHistoryPage = () => {
         Historique des commandes de {user?.username}
       </h1>
 
-      {orderHistory?.length > 0 ? (
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <span className="text-red-600 mt-12 font-bold text-lg">{`Error: ${error}`}</span>
+      ) : orderHistory?.length > 0 ? (
         <ul className="space-y-4">
-          {orderHistory?.map((order, index) => (
+          {orderHistory.map((order, index) => (
             <li key={index} className="bg-blue-100 p-4 rounded-md shadow-md">
               <h2 className="text-xl font-semibold mb-2">
                 Commande #{index + 1}

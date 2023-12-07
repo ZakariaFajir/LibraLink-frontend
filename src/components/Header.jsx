@@ -36,73 +36,76 @@ function Header() {
   };
 
   return (
-    <nav className="relative bg-white shadow">
-      <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
-        <div className="flex items-center justify-between">
-          <Link to="/">
-            <img className="w-auto h-6 sm:h-7" src={logo} alt="" />
-          </Link>
+      <nav className="fixed top-0 right-0 left-0 z-20 bg-white shadow">
+        <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
+          <div className="flex items-center justify-between">
+            <Link to="/">
+              <img className="w-auto h-6 sm:h-7" src={logo} alt="logo" />
+            </Link>
 
-          <div
-            className="flex md:hidden text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
-            aria-label="toggle menu"
-          >
-            {isOpen ? (
-              <FiX onClick={toggleMenu} className="w-6 h-6 cursor-pointer" />
-            ) : (
-              <div className="flex items-center gap-2">
-                <CartIcon cartItems={cartItems} />
-                <FiMenu onClick={toggleMenu} className="w-6 h-6 cursor-pointer" />
-              </div>
-            )}
+            <div
+              className="flex md:hidden text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+              aria-label="toggle menu"
+            >
+              {isOpen ? (
+                <FiX onClick={toggleMenu} className="w-6 h-6 cursor-pointer" />
+              ) : (
+                <div className="flex items-center gap-2">
+                  <CartIcon cartItems={cartItems} />
+                  <FiMenu
+                    onClick={toggleMenu}
+                    className="w-6 h-6 cursor-pointer"
+                  />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div className={`md:flex ${isOpen ? "block" : "hidden"}`}>
-          <div className="flex flex-col md:flex-row md:mx-6">
-            <MenuItem to="/" text="Home" icon={null} onClick={toggleMenu} />
-            <MenuItem
-              to="/contact"
-              text="Contact"
-              icon={null}
-              onClick={toggleMenu}
-            />
-            <MenuItem
-              to="/about"
-              text="About"
-              icon={null}
-              onClick={toggleMenu}
-            />
-
-            {!user ? (
+          <div className={`md:flex ${isOpen ? "block" : "hidden"}`}>
+            <div className="flex flex-col md:flex-row md:mx-6">
+              <MenuItem to="/" text="Home" icon={null} onClick={toggleMenu} />
               <MenuItem
-                to="/login"
-                text="Login"
-                icon={<FaDoorOpen className="w-5 h-5" />}
+                to="/contact"
+                text="Contact"
+                icon={null}
+                onClick={toggleMenu}
               />
-            ) : (
-              <>
-                <MenuItem
-                  to="/order-history"
-                  text="Order History"
-                  icon={null}
-                  onClick={toggleMenu}
-                />
-                <button
-                  onClick={signout}
-                  className="my-2 flex gap-1 items-center text-gray-700 transition-colors duration-300 transform  hover:text-blue-500 md:mx-4 md:my-0"
-                >
-                  <FaDoorClosed className="w-5 h-5" />
-                  Logout
-                </button>
-              </>
-            )}
-          </div>
+              <MenuItem
+                to="/about"
+                text="About"
+                icon={null}
+                onClick={toggleMenu}
+              />
 
-          <CartIcon cartItems={cartItems} />
+              {!user ? (
+                <MenuItem
+                  to="/login"
+                  text="Login"
+                  icon={<FaDoorOpen className="w-5 h-5" />}
+                />
+              ) : (
+                <>
+                  <MenuItem
+                    to="/order-history"
+                    text="Order History"
+                    icon={null}
+                    onClick={toggleMenu}
+                  />
+                  <button
+                    onClick={signout}
+                    className="my-2 flex gap-1 items-center text-gray-700 transition-colors duration-300 transform  hover:text-blue-500 md:mx-4 md:my-0"
+                  >
+                    <FaDoorClosed className="w-5 h-5" />
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
+
+            <CartIcon cartItems={cartItems} />
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
   );
 }
 

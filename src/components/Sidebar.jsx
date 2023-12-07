@@ -8,8 +8,7 @@ function Sidebar() {
   const [showCategories, setShowCategories] = useState(false);
   const [filtringTools, setFiltringTools] = useState({
     search: "",
-    categories: {
-    },
+    categories: {},
   });
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.products.all);
@@ -32,21 +31,20 @@ function Sidebar() {
           (category) => filtringTools.categories[category]
         ) &&
         !filtringTools.categories[product.category];
-    
-        const searchFilter =
+
+      const searchFilter =
         filtringTools.search.length > 0 &&
         (!product.category.toLowerCase().includes(filtringTools.search.toLowerCase()) &&
           !product.name.toLowerCase().includes(filtringTools.search.toLowerCase()));
-      
+
       return !categoryFilter && !searchFilter;
     });
-    
+
     dispatch(setFiltred(filteredProducts));
-    
   }, [filtringTools]);
 
   return (
-    <div className="bg-white rounded-md p-2">
+    <div className="fixed left-0 z-50 bg-white rounded-md p-2 w-[20%] ml-4">
       <h3 className="font-bold text-[18px]">Filters</h3>
       <div className="relative mt-3">
         <FaSearch className="absolute left-2 top-[50%] transform -translate-y-1/2" />

@@ -20,24 +20,28 @@ import Contact from "./pages/Contact";
 export default function App() {
   return (
     <Router>
-      <ToastContainer limit={1}/>
+      <ToastContainer limit={1} />
       <Header />
-      <Routes>
-        <Route path="/product/:slug" element={<ProductOverview />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Signin />} />
-        <Route path="/register" element={<Signup />} />
-        <Route path="/confirm-order" element={<OrderConfirmation />} />
-        <Route path="/order-history" element={<OrderHistoryPage />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/forgot-password/code-confirmation" element={<CodeConfirmation />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/*" element={<NotFound />} />
-
-      </Routes>
+      <div className="md:pt-16">
+        <Routes>
+          <Route path="/product/:slug" element={<ProductOverview />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Signin />} />
+          <Route path="/register" element={<Signup />} />
+          <Route path="/confirm-order" element={<OrderConfirmation />} />
+          <Route path="/order-history" element={<OrderHistoryPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/forgot-password/code-confirmation"
+            element={<CodeConfirmation />}
+          />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

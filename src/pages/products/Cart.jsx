@@ -52,15 +52,15 @@ function Cart() {
               {cartItems?.map((cart, index) => (
                 <div className="flex justify-between mb-5" key={index}>
                   <div className="flex">
-                    <div>
+                    <div className="rounded-lg bg-slate-300 p-1 ">
                       <img
                         src={cart.image}
                         alt={cart.name}
-                        className="w-[170px] h-[170px] object-cover"
+                        className="w-[170px] h-[170px] object-cover rounded-2xl"
                       />
                     </div>
                     <div className="flex flex-col justify-between p-2">
-                      <div>
+                      <div className="w-[150px]">
                         <h3 className="font-normal text-[16px]">{cart.name}</h3>
                         <span className="font-light text-[14px]">
                           {(cart.price * cart.quantity).toFixed(2)}$
@@ -71,7 +71,7 @@ function Cart() {
                       </span>
                     </div>
                   </div>
-                  <div>
+                  <div >
                     <input
                       type="number"
                       className="w-[70px] p-2 bg-slate-100 rounded-lg text-[12px]"
