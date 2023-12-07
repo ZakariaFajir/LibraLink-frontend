@@ -22,7 +22,7 @@ export default function App() {
     <Router>
       <ToastContainer limit={1} />
       <Header />
-      <div className="md:pt-16">
+      <div className="pt-16">
         <Routes>
           <Route path="/product/:slug" element={<ProductOverview />} />
           <Route path="/" element={<Home />} />
