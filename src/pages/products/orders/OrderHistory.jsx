@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { showInfoToast } from "../../../../utile";
+import { showInfoToast } from "../../../../utils";
 import Loading from "../../../components/Loading";
 
 const OrderHistoryPage = () => {
@@ -39,8 +39,22 @@ const OrderHistoryPage = () => {
     }
   }, [user, navigate]);
 
+  const getStatusBackgroundColor = (status) => {
+    switch (status) {
+      case 'Pending':
+        return 'bg-yellow-100';
+      case 'Accepted':
+        return 'bg-green-100';
+      case 'Declined':
+        return 'bg-red-100';
+      default:
+        return '';
+    }
+  };
+
   return (
-    <div className="container mx-auto mt-8">
+    <div className="bg-blue-100 min-h-[100vh] pt-8">
+      <div className="container mx-auto mt-8">
       <h1 className="text-3xl font-semibold mb-4">
         Historique des commandes de {user?.username}
       </h1>
@@ -52,10 +66,16 @@ const OrderHistoryPage = () => {
       ) : orderHistory?.length > 0 ? (
         <ul className="space-y-4">
           {orderHistory.map((order, index) => (
-            <li key={index} className="bg-blue-100 p-4 rounded-md shadow-md">
+            <li
+              key={index}
+              className={`p-4 rounded-md shadow-md ${getStatusBackgroundColor(
+                order.status
+              )}`}
+            >
               <h2 className="text-xl font-semibold mb-2">
                 Commande #{index + 1}
               </h2>
+              <p className="text-gray-700">Status: {order.status}</p>
               <p className="text-gray-700">Total: {order.total}$</p>
               <ul className="mt-2">
                 {order.items?.map((item, itemIndex) => (
@@ -74,6 +94,8 @@ const OrderHistoryPage = () => {
         <p className="text-gray-600">Aucune commande trouvée.</p>
       )}
     </div>
+    </div>
+    
   );
 };
 

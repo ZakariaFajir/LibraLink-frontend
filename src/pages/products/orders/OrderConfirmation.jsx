@@ -8,7 +8,7 @@ import {
   showErrorToast,
   showInfoToast,
   showSuccessToast,
-} from "../../../../utile";
+} from "../../../../utils";
 import { removeAll } from "../../../features/cartSlice";
 
 function OrderConfirmation() {

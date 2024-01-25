@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getError, showErrorToast, showInfoToast, showSuccessToast } from "../../../../utile";
+import { getError, showErrorToast, showInfoToast, showSuccessToast } from "../../../../utils";
 
 function CodeConfirmation() {
   const user = useSelector((state) => state.user);

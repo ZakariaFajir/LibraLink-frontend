@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getError, showErrorToast, showInfoToast, showSuccessToast } from "../../../../utile";
+import { getError, showErrorToast, showInfoToast, showSuccessToast } from "../../../../utils";
 import { setEmailReducer } from "../../../features/emailConfirmationSlice";
 
 function ForgotPassword() {

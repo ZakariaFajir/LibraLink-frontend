@@ -1,47 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaCaretDown, FaSearch } from "react-icons/fa";
 import Checkbox from "./Checkbox";
-import { setFiltred } from "../features/productSlice";
-import { useDispatch, useSelector } from "react-redux";
 
-function Sidebar() {
+function Sidebar({ filtringTools, setFiltringTools, handleSearchClick }) {
   const [showCategories, setShowCategories] = useState(false);
-  const [filtringTools, setFiltringTools] = useState({
-    search: "",
-    categories: {},
-  });
-  const dispatch = useDispatch();
-  const productList = useSelector((state) => state.products.all);
 
   const handleCheckboxChange = (event, category) => {
-    const isChecked = event.target.checked;
-    setFiltringTools((prevSelected) => ({
-      ...prevSelected,
-      categories: {
-        ...prevSelected.categories,
-        [category]: isChecked,
-      },
-    }));
-  };
-
-  useEffect(() => {
-    const filteredProducts = productList.filter((product) => {
-      const categoryFilter =
-        Object.keys(filtringTools.categories).some(
-          (category) => filtringTools.categories[category]
-        ) &&
-        !filtringTools.categories[product.category];
-
-      const searchFilter =
-        filtringTools.search.length > 0 &&
-        (!product.category.toLowerCase().includes(filtringTools.search.toLowerCase()) &&
-          !product.name.toLowerCase().includes(filtringTools.search.toLowerCase()));
-
-      return !categoryFilter && !searchFilter;
+    setFiltringTools((prevSelected) => {
+      return {
+        ...prevSelected,
+        category,
+      };
     });
-
-    dispatch(setFiltred(filteredProducts));
-  }, [filtringTools]);
+  };
 
   return (
     <div className="fixed left-0 z-50 bg-white rounded-md p-2 w-[20%] ml-4">
@@ -57,6 +28,12 @@ function Sidebar() {
           placeholder="Search your item"
         />
       </div>
+      <button
+        onClick={handleSearchClick}
+        className="bg-blue-500 text-white p-2 mt-3 rounded-md"
+      >
+        Search
+      </button>
       <ul className="text-gray-600 font-semibold mt-3">
         <li>
           <div
@@ -74,20 +51,14 @@ function Sidebar() {
           {showCategories && (
             <>
               <Checkbox
-                onClick={(event) => handleCheckboxChange(event, "Fournitures de bureau")}
-                category="Fournitures de bureau"
+                onClick={(event) => handleCheckboxChange(event, "Papeterie")}
+                category="Papeterie"
               />
               <Checkbox
-                onClick={(event) => handleCheckboxChange(event, "Accessoires")}
-                category="Accessoires"
-              />
-              <Checkbox
-                onClick={(event) => handleCheckboxChange(event, "Jouets")}
-                category="Jouets"
-              />
-              <Checkbox
-                onClick={(event) => handleCheckboxChange(event, "Mobilier de bibliothèque")}
-                category="Mobilier de bibliothèque"
+                onClick={(event) =>
+                  handleCheckboxChange(event, "Fournituredebureau")
+                }
+                category="Fournituredebureau"
               />
             </>
           )}

@@ -8,6 +8,7 @@ import AddToCartButton from "./AddToCartButton";
 function Products({ products }) {
   const cartItems = useSelector((state) => state.cartItems) || [];
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const addToCartHandler = async (product) => {
     const existItem = cartItems.find((x) => x._id === product._id);
@@ -37,9 +38,13 @@ function Products({ products }) {
                 {product.category}
               </span>
               <div className="flex justify-between items-center">
-                <h2 className="dark:text-white text-[20px] font-bold">
-                  {product.price}$
-                </h2>
+                {user ? (
+                  <h2 className="dark:text-white text-[20px] font-bold">
+                    {product.price} DHs
+                  </h2>
+                ) : (
+                  <p className="text-gray-500">$</p>
+                )}
                 <AddToCartButton onClick={() => addToCartHandler(product)} />
               </div>
             </div>

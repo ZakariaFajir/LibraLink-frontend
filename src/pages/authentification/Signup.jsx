@@ -1,7 +1,7 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getError } from "../../../utile";
+import { getError } from "../../../utils";
 import { useSelector } from "react-redux";
 import image from "../../assets/images/biblio.png";
 import logo from "../../assets/images/logo.png";

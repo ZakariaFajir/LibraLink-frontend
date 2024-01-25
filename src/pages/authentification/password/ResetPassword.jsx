@@ -7,7 +7,7 @@ import {
   showErrorToast,
   showInfoToast,
   showSuccessToast,
-} from "../../../../utile";
+} from "../../../../utils";
 import { setEmailReducer } from "../../../features/emailConfirmationSlice";
 
 function ResetPassword() {

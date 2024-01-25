@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Signin from "./pages/authentification/Signin";
 import Signup from "./pages/authentification/Signup";
 import Header from "./components/Header";
@@ -16,8 +16,25 @@ import CodeConfirmation from "./pages/authentification/password/CodeConfirmation
 import ResetPassword from "./pages/authentification/password/ResetPassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import ManageOrders from "./pages/amdin/ManageOrders";
+import ManageProduct from "./pages/amdin/ManageProducts";
+import EditProduct from "./pages/amdin/EditProduct";
+import { useSelector } from "react-redux";
 
 export default function App() {
+  const user = useSelector((state) => state.user);
+
+  const isAdmin = () => {
+    return user && user.isAdmin;
+  };
+
+  const PrivateRoute = ({ element }) => {
+    return isAdmin() ? (
+      element
+    ) : (
+      <Navigate to="/" replace />
+    );
+  };
   return (
     <Router>
       <ToastContainer limit={1} />
@@ -31,9 +48,27 @@ export default function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Signin />} />
           <Route path="/register" element={<Signup />} />
+          <Route path="/register" element={<Signup />} />
           <Route path="/confirm-order" element={<OrderConfirmation />} />
           <Route path="/order-history" element={<OrderHistoryPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/manage-orders"
+            element={<PrivateRoute element={<ManageOrders />} />}
+          />
+          <Route
+            path="/manage-products"
+            element={<PrivateRoute element={<ManageProduct />} />}
+          />
+          <Route
+            path="/manage-products/add"
+            element={<PrivateRoute element={<EditProduct />} />}
+          />
+          <Route
+            path="/manage-products/:slug"
+            element={<PrivateRoute element={<EditProduct />} />}
+          />
+
           <Route
             path="/forgot-password/code-confirmation"
             element={<CodeConfirmation />}

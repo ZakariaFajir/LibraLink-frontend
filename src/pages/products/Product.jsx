@@ -10,6 +10,7 @@ const Product = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartItems);
+  const user = useSelector((state) => state.user);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const Product = () => {
         </div>
       ) : (
         product && (
-          <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <div className="h-full w-[40%] border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
             <img
               className="h-96 w-full object-cover object-center"
               src={product.image}
@@ -58,9 +59,13 @@ const Product = () => {
                 {product.description}
               </p>
               <div className="flex items-center flex-wrap justify-between">
-                <span className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
-                  Price: ${product.price}
-                </span>
+                {user ? (
+                  <span className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                    Price: {product.price}$
+                  </span>
+                ) : (
+                  <p className="text-gray-500">$</p>
+                )}
                 <AddToCartButton onClick={addToCartHandler} />
               </div>
             </div>

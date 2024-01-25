@@ -1,7 +1,7 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getError } from "../../../utile";
+import { getError } from "../../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../features/userSlice";
 import { GoogleLogin } from "@react-oauth/google";
