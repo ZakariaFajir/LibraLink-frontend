@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cartSlice";
-import Loading from "./Loading";
 import AddToCartButton from "./AddToCartButton";
+import { toast } from "react-toastify";
+import { showSuccessToast } from "../../utils";
 
 function Products({ products }) {
   const cartItems = useSelector((state) => state.cartItems) || [];
@@ -14,6 +15,9 @@ function Products({ products }) {
     const existItem = cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     dispatch(addToCart({ ...product, quantity }));
+    const message = `${product.name} a été ajouté à votre panier avec succès!`;
+
+    showSuccessToast(message, "top-center");
   };
 
   return (
@@ -31,20 +35,18 @@ function Products({ products }) {
                 src={product.image}
               />
             </Link>
-          
-            <span className="p-2 font-semibold text-[18px]">{product.name}</span>
+
+            <span className="p-2 font-semibold text-[18px]">
+              {product.name}
+            </span>
             <div className="p-2">
               <span className="font-semibold text-[16px] text-gray-600 block">
                 {product.category}
               </span>
               <div className="flex justify-between items-center">
-                {user ? (
-                  <h2 className="dark:text-white text-[20px] font-bold">
-                    {product.price} DHs
-                  </h2>
-                ) : (
-                  <p className="text-gray-500">$</p>
-                )}
+                <h2 className="dark:text-white text-[18px] font-semibold">
+                  {product.price} DHs
+                </h2>
                 <AddToCartButton onClick={() => addToCartHandler(product)} />
               </div>
             </div>

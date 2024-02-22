@@ -37,7 +37,7 @@ export default function App() {
   };
   return (
     <Router>
-      <ToastContainer limit={1} />
+      <ToastContainer limit={1} autoClose={1500} />
       <Header />
       <div className="pt-16">
         <Routes>

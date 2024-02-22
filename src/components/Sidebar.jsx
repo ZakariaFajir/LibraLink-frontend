@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaCaretDown, FaSearch } from "react-icons/fa";
 import Checkbox from "./Checkbox";
+import { useLocation } from "react-router-dom";
 
 function Sidebar({ filtringTools, setFiltringTools, handleSearchClick }) {
-  const [showCategories, setShowCategories] = useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
 
-  const handleCheckboxChange = (event, category) => {
-    setFiltringTools((prevSelected) => {
-      return {
-        ...prevSelected,
-        category,
-      };
-    });
+  const [showCategories, setShowCategories] = useState(
+    queryParams.has("category")
+  );
+  const handleCheckboxChange = (e, category) => {
+    setFiltringTools((prevFiltringTools) => ({
+      ...prevFiltringTools,
+      category: prevFiltringTools.category === category ? '' : category,
+    }));
   };
-
+  
   return (
     <div className="fixed left-0 z-50 bg-white rounded-md p-2 w-[20%] ml-4">
       <h3 className="font-bold text-[18px]">Filters</h3>
@@ -26,14 +29,9 @@ function Sidebar({ filtringTools, setFiltringTools, handleSearchClick }) {
           className="pl-7 p-2 bg-slate-100 w-full rounded-lg border border-gray-500 focus:border-blue-500 focus:border-2 outline-none"
           type="text"
           placeholder="Search your item"
+          value={filtringTools.search}
         />
       </div>
-      <button
-        onClick={handleSearchClick}
-        className="bg-blue-500 text-white p-2 mt-3 rounded-md"
-      >
-        Search
-      </button>
       <ul className="text-gray-600 font-semibold mt-3">
         <li>
           <div
@@ -53,17 +51,27 @@ function Sidebar({ filtringTools, setFiltringTools, handleSearchClick }) {
               <Checkbox
                 onClick={(event) => handleCheckboxChange(event, "Papeterie")}
                 category="Papeterie"
+                checked={filtringTools.category === "Papeterie"}
               />
               <Checkbox
                 onClick={(event) =>
-                  handleCheckboxChange(event, "Fournituredebureau")
+                  handleCheckboxChange(event, "Fourniture de bureau")
                 }
-                category="Fournituredebureau"
+                category="Fourniture de bureau"
+                checked={filtringTools.category === "Fourniture de bureau"}
               />
             </>
           )}
         </li>
       </ul>
+      <button
+        onClick={() => {
+          handleSearchClick();
+        }}
+        className="bg-blue-500 text-white p-2 mt-3 rounded-md"
+      >
+        Search
+      </button>
     </div>
   );
 }

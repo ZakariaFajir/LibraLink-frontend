@@ -3,8 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-// import firebase from "firebase/app";
-// import "firebase/storage";
 
 const EditProduct = () => {
   const { slug } = useParams();
@@ -47,42 +45,6 @@ const EditProduct = () => {
       [name]: value,
     }));
   };
-
-  //   const firebaseConfig = {
-  //     apiKey: "AIzaSyCnIt6s5SfCFXgiwzJOmjMJoiku1rFDdbc",
-  //     authDomain: "e-commerce-8e800.firebaseapp.com",
-  //     projectId: "e-commerce-8e800",
-  //     storageBucket: "e-commerce-8e800.appspot.com",
-  //     messagingSenderId: "136753798889",
-  //     appId: "1:136753798889:web:28fbff08b544c053a65a78",
-  //     measurementId: "G-QLYB9YHYGY"
-  //   };
-
-  // firebase.initializeApp(firebaseConfig);
-
-  // const storage = firebase.storage();
-
-  // const handleImageChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   const reader = new FileReader();
-
-  //   reader.onloadend = async () => {
-  //     const storageRef = storage.ref();
-  //     const imageRef = storageRef.child(`images/${file.name}`);
-  //     await imageRef.put(file);
-
-  //     const downloadURL = await imageRef.getDownloadURL();
-
-  //     setItem((prevItem) => ({
-  //       ...prevItem,
-  //       image: downloadURL,
-  //     }));
-  //   };
-
-  //   if (file) {
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
