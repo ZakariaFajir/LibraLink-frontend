@@ -1,10 +1,9 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getError } from "../../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../features/userSlice";
-import { GoogleLogin } from "@react-oauth/google";
 import image from "../../assets/images/biblio.png";
 import logo from "../../assets/images/logo.png";
 
@@ -37,22 +36,6 @@ function Signin() {
           password,
         }
       );
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      dispatch(signIn(data));
-    } catch (err) {
-      setError(getError(err));
-    }
-  };
-  const loginSuccess = async (resp) => {
-    try {
-      const { data } = await Axios.post(
-        import.meta.env.VITE_API_URI + "/users/signin",
-        {
-          idToken: resp.credential,
-          clientId: resp.clientId,
-        }
-      );
-
       localStorage.setItem("userInfo", JSON.stringify(data));
       dispatch(signIn(data));
     } catch (err) {
@@ -140,14 +123,6 @@ function Signin() {
                     onChange={handleInputChange}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg     focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
-                  <div className="flex justify-end">
-                    <Link
-                      to="/forgot-password"
-                      className="text-sm mt-2 text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
                 </div>
                 {error && (
                   <p className="text-sm text-red-500 p-2 font-normal">
@@ -160,28 +135,6 @@ function Signin() {
                   </button>
                 </div>
               </form>
-              <div className="mt-6">
-                <GoogleLogin
-                  onSuccess={(credentialResponse) =>
-                    loginSuccess(credentialResponse)
-                  }
-                  onError={() => {
-                    console.log("Login Failed");
-                  }}
-                />
-                ;
-              </div>
-
-              <p className="mt-6 text-sm text-center text-gray-400">
-                Don&#x27;t have an account yet?
-                <Link
-                  to="/register"
-                  className="text-blue-500 focus:outline-none focus:underline hover:underline"
-                >
-                  Sign up
-                </Link>
-                .
-              </p>
             </div>
           </div>
         </div>

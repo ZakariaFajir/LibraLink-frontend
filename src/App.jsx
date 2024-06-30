@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Signin from "./pages/authentification/Signin";
-import Signup from "./pages/authentification/Signup";
 import Header from "./components/Header";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -32,7 +31,7 @@ export default function App() {
     return isAdmin() ? (
       element
     ) : (
-      <Navigate to="/" replace />
+      <Navigate to="/login" replace />
     );
   };
   return (
@@ -42,13 +41,11 @@ export default function App() {
       <div className="pt-16">
         <Routes>
           <Route path="/product/:slug" element={<ProductOverview />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={ <PrivateRoute element={<Home />} /> } />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Signin />} />
-          <Route path="/register" element={<Signup />} />
-          <Route path="/register" element={<Signup />} />
           <Route path="/confirm-order" element={<OrderConfirmation />} />
           <Route path="/order-history" element={<OrderHistoryPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

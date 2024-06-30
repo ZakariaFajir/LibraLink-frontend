@@ -3,17 +3,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { storeImage } from "../../../services/firebase";
 
 const EditProduct = () => {
   const { slug } = useParams();
   const user = useSelector((state) => state.user);
-
 
   const [item, setItem] = useState({
     name: "",
     price: 0,
     category: "",
     image: "",
+    imageFile: null
   });
 
   useEffect(() => {
@@ -21,14 +22,24 @@ const EditProduct = () => {
       fetchItemBySlug(slug);
     }
   }, [slug]);
+
   const navigate = useNavigate();
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setItem((prevItem) => ({
+        ...prevItem,
+        imageFile: e.target.files[0]
+      }));
+    }
+  };
 
   const fetchItemBySlug = async (slug) => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URI}/products/slug/${slug}`,
         {
-          headers: { authorization: `Bearer ${user.token}` },
+          headers: { authorization: `Bearer ${user.token}` }
         }
       );
       const existingItem = response.data;
@@ -42,7 +53,7 @@ const EditProduct = () => {
     const { name, value } = e.target;
     setItem((prevItem) => ({
       ...prevItem,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -50,19 +61,27 @@ const EditProduct = () => {
     e.preventDefault();
 
     try {
+      if (item.imageFile) {
+        item.image = await storeImage(item.imageFile);
+      }
+
       if (slug) {
         await axios.put(
           `${import.meta.env.VITE_API_URI}/products/slug/${slug}`,
-          item
+          item,
+          {
+            headers: { authorization: `Bearer ${user.token}` }
+          }
         );
         toast.success("Product updated successfully");
       } else {
-        await axios.post(import.meta.env.VITE_API_URI+"/products", item);
+        await axios.post(`${import.meta.env.VITE_API_URI}/products`, item);
         toast.success("Product added successfully");
       }
       navigate("/manage-products");
     } catch (error) {
       console.error("Error adding/modifying item:", error);
+      toast.error("Error adding/modifying item");
     }
   };
 
@@ -90,7 +109,7 @@ const EditProduct = () => {
             Price:
           </label>
           <input
-            type="text"
+            type="number"
             name="price"
             value={item.price}
             onChange={handleChange}
