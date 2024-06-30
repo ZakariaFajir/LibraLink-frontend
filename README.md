@@ -1,4 +1,4 @@
-# Frontend Application for BIBLIO APP
+# Frontend Application for LIBRALINK
 
 This frontend application is built using React, Tailwind CSS, and Redux to create an interactive and responsive user interface for a biblio app. The application communicates with the backend API to fetch product information, manage user authentication, and display order confirmations.
 
