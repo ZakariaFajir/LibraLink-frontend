@@ -6,6 +6,7 @@ import { setAll, setFiltred } from "../features/productSlice";
 import axios from "axios";
 import Loading from "../components/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
+import {  FaAngleLeft, FaAngleRight } from "react-icons/fa"; // Import the icons
 
 function Home() {
   const productList = useSelector((state) => state.products.filtred);
@@ -20,6 +21,7 @@ function Home() {
   const initialSearch = queryParams.get("query") || "";
   const initialCategory = queryParams.get("category") || "";
   const navigate = useNavigate();
+  const [sidebarVisible, setSidebarVisible] = useState(false); // State to manage sidebar visibility
 
   const [filtringTools, setFiltringTools] = useState({
     search: initialSearch,
@@ -39,13 +41,13 @@ function Home() {
         pathname: location.pathname,
         search: newUrl,
       });
-    }
-    else {
+    } else {
       navigate({
         pathname: location.pathname,
-        search: '',
+        search: "",
       });
     }
+    setSidebarVisible(false);
   };
 
   const generatePageNumbers = (totalPages, currentPage) => {
@@ -72,6 +74,7 @@ function Home() {
       (_, index) => currentPage - halfMaxPageNumbers + index
     );
   };
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -106,7 +109,7 @@ function Home() {
   }, [dispatch, currentPage, location.search]);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center lg:justify-normal gap-4 relative">
       {loading ? (
         <div className="h-[100vh] flex items-center">
           <Loading />
@@ -115,25 +118,37 @@ function Home() {
         <span className="text-red-600 mt-12 font-bold text-lg">{`Error: ${error}`}</span>
       ) : (
         <>
-          <aside className="hidden lg:block w-1/4 bg-gray-200 p-4 min-h-[100vh]">
+          <aside
+            className={`lg:block transform ${
+              sidebarVisible ? "translate-x-0" : "-translate-x-full"
+            } lg:translate-x-0 transition-transform duration-300 ease-in-out w-[360px] z-10 absolute lg:relative left-0 bg-gray-200 p-4 min-h-[100vh]`}
+          >
             <Sidebar
               handleSearchClick={handleSearchClick}
               filtringTools={filtringTools}
               setFiltringTools={setFiltringTools}
             />
           </aside>
-          {productList.length === 0 ? (
-            <>
-              <div className="lg:w-3/4 w-full p-4">
+
+          <button
+            className={`lg:hidden absolute top-4 h-12 left-0 z-20 bg-gray-200 p-2 rounded-r-full ${
+              sidebarVisible ? "translate-x-[340px]" : ""
+            } transition-transform duration-300 ease-in-out`}
+            onClick={() => setSidebarVisible(!sidebarVisible)}
+          >
+            {sidebarVisible ? <FaAngleLeft /> : <FaAngleRight />}
+          </button>
+
+          <main className="w-full p-4">
+            {productList.length === 0 ? (
+              <>
                 <p className="text-2xl font-semibold mb-4">
                   No products available.
                 </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <main className="lg:w-3/4 w-full p-4">
-                <h1 className="text-2xl font-semibold mb-4">
+              </>
+            ) : (
+              <>
+                <h1 className="text-2xl font-semibold mb-6 mt-12">
                   Liste des produits
                 </h1>
                 <Products products={productList} />
@@ -155,7 +170,7 @@ function Home() {
                       key={page}
                       onClick={() => setCurrentPage(page)}
                       disabled={currentPage === page}
-                      className={`mx-1 px-3 py-1 ${
+                      className={`mx-1 h-9 w-9 rounded-full hover:bg-gray-500 hover:text-white ${
                         currentPage === page
                           ? "bg-gray-500 text-white"
                           : "bg-gray-300"
@@ -176,9 +191,9 @@ function Home() {
                     Suivant
                   </button>
                 </div>
-              </main>
-            </>
-          )}
+              </>
+            )}
+          </main>
         </>
       )}
     </div>

@@ -95,7 +95,7 @@ const ManageProduct = () => {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover mb-2 rounded-md"
+                  className="w-full h-[500px] object-cover mb-2 rounded-md"
                 />
               </div>
               <div className="p-3">

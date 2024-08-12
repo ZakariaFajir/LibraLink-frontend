@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import AddToCartButton from "./AddToCartButton";
-import { toast } from "react-toastify";
 import { showSuccessToast } from "../../utils";
 
 function Products({ products }) {
@@ -22,7 +21,7 @@ function Products({ products }) {
 
   return (
     <div className="mt-5">
-      <h2 className="font-bold text-[30px] dark:text-white">Products</h2>
+      <h2 className="font-bold text-[30px]">Products</h2>
       <div className="grid grid-auto gap-4">
         {products?.map((product, index) => (
           <div
@@ -44,7 +43,7 @@ function Products({ products }) {
                 {product.category}
               </span>
               <div className="flex justify-between items-center">
-                <h2 className="dark:text-white text-[18px] font-semibold">
+                <h2 className="text-[18px] font-semibold">
                   {product.price} DHs
                 </h2>
                 <AddToCartButton onClick={() => addToCartHandler(product)} />

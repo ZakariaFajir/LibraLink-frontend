@@ -41,6 +41,8 @@ export default function App() {
       <div className="pt-16">
         <Routes>
           <Route path="/product/:slug" element={<ProductOverview />} />
+          {/* home element should be displayed for auth */}
+          <Route path="/" element={user ? <Home /> : <Navigate to="/login" replace />} />
           <Route path="/" element={ <PrivateRoute element={<Home />} /> } />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />

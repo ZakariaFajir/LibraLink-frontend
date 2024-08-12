@@ -13,6 +13,7 @@ const EditProduct = () => {
     name: "",
     price: 0,
     category: "",
+    unit: "", // Added unit state
     image: "",
     imageFile: null
   });
@@ -75,7 +76,9 @@ const EditProduct = () => {
         );
         toast.success("Product updated successfully");
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URI}/products`, item);
+        await axios.post(`${import.meta.env.VITE_API_URI}/products`, item, {
+          headers: { authorization: `Bearer ${user.token}` }
+        });
         toast.success("Product added successfully");
       }
       navigate("/manage-products");
@@ -86,11 +89,11 @@ const EditProduct = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 p-3">
-      <h1 className="text-3xl font-semibold mb-4">
+    <div className="max-w-[600px] border border-gray-400 rounded-lg flex justify-center items-center flex-col mx-auto mt-12 shadow-lg p-4">
+      <h1 className="text-3xl font-semibold my-8 ">
         {slug ? "Modify Item" : "Add New Item"}
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="w-full mb-4">
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">
             Name:
@@ -125,6 +128,19 @@ const EditProduct = () => {
             type="text"
             name="category"
             value={item.category}
+            onChange={handleChange}
+            className="p-2 border w-full border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-600">
+            Unit:
+          </label>
+          <input
+            type="text"
+            name="unit"
+            value={item.unit}
             onChange={handleChange}
             className="p-2 border w-full border-gray-300 rounded"
             required

@@ -67,15 +67,15 @@ function OrderConfirmation() {
   }, [user, cartItems]);
   return (
     <div className="bg-white">
-      <div className="flex items-center h-[100vh] w-[80%] lg:w-[60%] bg-blue-50 p-4 rounded-md px-6 mx-auto">
-        <div className="flex-1">
+      <div className="flex items-center h-[100vh] w-[80%] lg:w-[50%] border border-gray-300 shadow-lg p-4 rounded-md px-6 mx-auto">
+        <div className="flex-1 flex items-center flex-col">
           <div className="text-center">
             <h1 className="mt-3 text-gray-800 font-bold text-4xl">
               Confirm your order
             </h1>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-8 w-[400px] mb-8">
             <form onSubmit={submitHandler}>
               <div>
                 <label
@@ -130,7 +130,9 @@ function OrderConfirmation() {
                 </div>
               </div>
             </form>
-            <div className="mt-4 p-4 bg-blue-100 border border-blue-400 text-gray-700 rounded">
+          
+          </div>
+          <div className="mt-4 p-4 border-2 border-slate-300 text-gray-700 rounded">
               <p className="font-semibold">Order Confirmation</p>
               <p>
                 Après avoir passé votre commande, un email sera envoyé au
@@ -139,7 +141,6 @@ function OrderConfirmation() {
                 pour planifier la livraison.
               </p>
             </div>
-          </div>
         </div>
       </div>
     </div>

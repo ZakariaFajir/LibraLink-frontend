@@ -70,7 +70,7 @@ const ManageOrders = () => {
   );
 
   return (
-    <div className="bg-blue-100 min-h-[100vh] text-gray-700 p-8">
+    <div className="bg-slate-50 min-h-[100vh] text-gray-700 p-8">
       <h1 className="text-3xl font-bold mb-6">Manage Orders</h1>
       <div className="mb-4 flex items-center">
         <label className="mr-2 text-gray-700">Filter by Status:</label>

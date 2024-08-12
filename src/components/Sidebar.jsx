@@ -18,7 +18,7 @@ function Sidebar({ filtringTools, setFiltringTools, handleSearchClick }) {
   };
   
   return (
-    <div className="fixed left-0 z-50 bg-white rounded-md p-2 w-[20%] ml-4">
+    <div className="fixed left-0 z-50 bg-white rounded-md p-2 w-[250px] ml-4">
       <h3 className="font-bold text-[18px]">Filters</h3>
       <div className="relative mt-3">
         <FaSearch className="absolute left-2 top-[50%] transform -translate-y-1/2" />
